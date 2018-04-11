@@ -1,0 +1,60 @@
+package com.pingan.register;
+
+import java.util.HashSet;
+import java.util.Scanner;
+
+class User {
+	private String id;
+	private String password;
+	
+	public String id() {
+		return this.id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String password() {
+		return this.password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public User() {
+		super();
+	}
+	
+	public User(String id, String password) {
+		super();
+		this.id = id;
+		this.password = password;
+	}
+	
+}
+
+
+public class test {
+	
+	private static final HashSet<Object> dataSet = new HashSet<>();
+	
+	private static final Scanner scanner = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+		while (true) {
+			System.out.println("请输入指令: A(注册) B(登录)");
+			String option = scanner.next();
+			if ("a".equalsIgnoreCase(option)) {
+				System.out.println("用户选择了注册");
+			} else if ("b".equalsIgnoreCase(option)) {
+				System.out.println("用户选择了登录");
+			}
+		}
+		
+		
+	}
+
+}

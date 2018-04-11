@@ -1,70 +1,108 @@
 package com.pingan.register;
 
+import java.util.HashSet;
 import java.util.Scanner;
 
 class User {
-	private String userName;
+	private int id;
 	private String password;
-
-	/**
-	 * @param userName
-	 * @param password
-	 */
-	public User(String userName, String password) {
-		super();
-		this.userName = userName;
-		this.password = password;
+	
+	public int id() {
+		return this.id;
 	}
 	
-	public User() {
-		
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	/**
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
+	
+	public String password() {
+		return this.password;
 	}
-
-	/**
-	 * @param userName the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password the password to set
-	 */
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	
+	public User() {
+		super();
+	}
 	
-
+	public User(int id, String password) {
+		super();
+		this.id = id;
+		this.password = password;
+	}
+	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		if (obj.getClass().equals(this.getClass())) {
+			return this.id == ((User)obj).id && this.password.equals(((User)obj).password);
+		}
+		return super.equals(obj);
+	}
+	
 }
 
+
 public class test {
-
+	
+	private static final HashSet<Object> dataSet = new HashSet<>();
+	
+	private static final Scanner scanner = new Scanner(System.in);
+	
 	public static void main(String[] args) {
-		System.out.println("�밴��ʾ����: A(��¼) B(ע��)");
-		Scanner scanner = new Scanner(System.in);
 		
-		String option = scanner.next();
 		
-		if ("a".equalsIgnoreCase(option)) {
-			System.out.println("�û�ѡ���˵�¼");
-		} else if ("b".equalsIgnoreCase(option)) {
-			System.out.println("�û�ѡ����ע��");
+		while (true) {
+			print("请输入指令: A(注册) B(登录)");
+			String option = scanner.next();
+			if ("a".equalsIgnoreCase(option)) {
+				//新建用户
+				User newUser = getNewUser();
+				
+				//查看数据库是否存在, 存在则提示已经存在, 不存在则插入并提示新建成功
+				boolean result = dataSet.add(newUser);
+				if (result) {
+					print("register success");
+				} else {
+					print("this user is already exited");
+				}
+			} else if ("b".equalsIgnoreCase(option)) {
+				System.out.println("用户选择了登录");
+				//查看数据库中是否存在, 不存在提示用户密码错误, 存在提示登录成功.
+				User newUser = getNewUser();
+				
+				boolean result = dataSet.contains(newUser);
+				if (result) {
+					print("login success");
+				} else {
+					print("userId or password is incorrect");
+				}
+				
+			}
 		}
+		
+		
 	}
-
+	
+	private static void print(String content) {
+		System.out.println(content);
+	}
+	
+	private static User getNewUser() {
+		print("请输入用户名");
+		int userId = Integer.parseInt(scanner.next()); 
+		print("请输入密码");
+		String pwd = scanner.next();
+		//新建用户
+		User newUser = new User(userId, pwd);
+		return newUser;
+	}
 }
